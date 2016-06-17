@@ -14,7 +14,7 @@ module Weatherman
     attr_accessor :document_root
 
     def initialize(raw, language = nil)
-      @document_root = JSON.parse(raw).dig('query', 'results', 'channel')
+      @document_root = JSON.parse(raw).try(:[], 'query').try(:[], 'results').try(:[], 'channel')
       @i18n = Weatherman::I18N.new(language)
     end
 
